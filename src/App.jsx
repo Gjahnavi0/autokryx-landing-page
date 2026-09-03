@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-
 import Navbar from "./components/Navbar";
+import CustomCursor from "./components/CustomCursor";
 import Hero from "./components/Hero";
 import Products from "./components/Products";
 import Corporate from "./components/Corporate";
@@ -10,24 +10,20 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <>
-      {/* NAVBAR */}
+      <CustomCursor />
+
       <Navbar />
 
       <main>
-
-        {/* HERO */}
         <Hero />
 
-        {/* PRODUCTS */}
         <Products />
 
-        {/* CORPORATE */}
         <Corporate />
 
-        {/* VISION */}
         <Vision />
 
-        {/* CONTACT */}
+        {/* CONTACT SECTION */}
         <section
           id="contact"
           className="contact-section"
@@ -51,8 +47,6 @@ function App() {
               ease: [0.22, 1, 0.36, 1],
             }}
           >
-
-            {/* LABEL */}
             <motion.p
               className="section-label"
               initial={{
@@ -73,8 +67,6 @@ function App() {
               AUTOKRYX TECHNOLOGIES
             </motion.p>
 
-
-            {/* HEADING */}
             <motion.h2
               initial={{
                 opacity: 0,
@@ -97,8 +89,6 @@ function App() {
               <em>what’s next.</em>
             </motion.h2>
 
-
-            {/* DESCRIPTION */}
             <motion.p
               className="contact-text"
               initial={{
@@ -120,8 +110,6 @@ function App() {
               Explore our products, technology and vision.
             </motion.p>
 
-
-            {/* CONTACT BUTTON */}
             <motion.a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@autokryx.in"
               target="_blank"
@@ -148,13 +136,10 @@ function App() {
               Contact Us
               <span>↗</span>
             </motion.a>
-
           </motion.div>
         </section>
-
       </main>
 
-      {/* FOOTER */}
       <Footer />
     </>
   );

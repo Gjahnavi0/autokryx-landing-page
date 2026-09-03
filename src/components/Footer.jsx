@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer">
-
       <motion.div
-        className="footer-top"
+        className="footer-inner"
         initial={{
           opacity: 0,
-          y: 50,
+          y: 30,
         }}
         whileInView={{
           opacity: 1,
@@ -19,111 +20,78 @@ function Footer() {
           amount: 0.2,
         }}
         transition={{
-          duration: 0.9,
-          ease: [0.22, 1, 0.36, 1],
+          duration: 0.8,
         }}
       >
-
-        {/* FOOTER BRAND */}
-        <motion.div
-          initial={{
-            opacity: 0,
-            x: -40,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.1,
-          }}
-        >
-          <p className="footer-label">
-            AUTOKRYX TECHNOLOGIES
-          </p>
-
-          <h2>
-            Building
-            <br />
-            <span>what’s next.</span>
-          </h2>
-        </motion.div>
-
-
-        {/* FOOTER LINKS */}
-        <motion.div
-          className="footer-links"
-          initial={{
-            opacity: 0,
-            x: 40,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.2,
-          }}
-        >
-
+        {/* Brand */}
+        <div className="footer-brand">
           <motion.a
             href="#home"
-            whileHover={{ x: 6 }}
+            whileHover={{
+              opacity: 0.7,
+            }}
+          >
+            <h3>AUTOKRYX</h3>
+          </motion.a>
+
+          <p>
+            Technology, infrastructure and
+            intelligence built for what&apos;s next.
+          </p>
+        </div>
+
+        {/* Footer Links */}
+        <div className="footer-links">
+          <motion.a
+            href="#home"
+            whileHover={{
+              y: -3,
+            }}
           >
             Home
           </motion.a>
 
           <motion.a
             href="#products"
-            whileHover={{ x: 6 }}
+            whileHover={{
+              y: -3,
+            }}
           >
             Products
           </motion.a>
 
           <motion.a
             href="#corporate"
-            whileHover={{ x: 6 }}
+            whileHover={{
+              y: -3,
+            }}
           >
             Corporate
           </motion.a>
 
           <motion.a
             href="#vision"
-            whileHover={{ x: 6 }}
+            whileHover={{
+              y: -3,
+            }}
           >
             Vision
-          </motion.a>
-
-          <motion.a
-            href="#contact"
-            whileHover={{ x: 6 }}
-          >
-            Contact
           </motion.a>
 
           <motion.a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@autokryx.in"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ x: 6 }}
+            whileHover={{
+              y: -3,
+            }}
           >
-            contact@autokryx.in
+            Contact
           </motion.a>
-
-        </motion.div>
-
+        </div>
       </motion.div>
 
-
-      {/* FOOTER BOTTOM */}
+      {/* Bottom */}
       <motion.div
         className="footer-bottom"
         initial={{
@@ -137,18 +105,17 @@ function Footer() {
         }}
         transition={{
           duration: 0.8,
-          delay: 0.4,
+          delay: 0.2,
         }}
       >
-        <span>
-          © 2026 Autokryx Technologies
-        </span>
+        <p>
+          © {currentYear} AUTOKRYX TECHNOLOGIES
+        </p>
 
-        <span>
-          Technology · Identity · Intelligence
-        </span>
+        <p>
+          Built for what&apos;s next.
+        </p>
       </motion.div>
-
     </footer>
   );
 }

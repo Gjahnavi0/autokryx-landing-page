@@ -3,61 +3,89 @@ import { Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 
-/* =========================================
-   3D CRYSTAL
-========================================= */
-
 function Crystal() {
   const crystalRef = useRef(null);
   const wireRef = useRef(null);
   const innerRef = useRef(null);
-
   const { pointer } = useThree();
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
 
+    const mouseX = pointer.x;
+    const mouseY = pointer.y;
+
     if (crystalRef.current) {
-      crystalRef.current.rotation.y = time * 0.25;
+      const targetRotationY =
+        time * 0.18 + mouseX * 0.35;
 
-      crystalRef.current.rotation.x =
-        Math.sin(time * 0.3) * 0.15;
-
-      crystalRef.current.rotation.x +=
-        pointer.y * 0.08;
+      const targetRotationX =
+        Math.sin(time * 0.35) * 0.12 -
+        mouseY * 0.18;
 
       crystalRef.current.rotation.y +=
-        pointer.x * 0.08;
+        (targetRotationY -
+          crystalRef.current.rotation.y) *
+        0.04;
+
+      crystalRef.current.rotation.x +=
+        (targetRotationX -
+          crystalRef.current.rotation.x) *
+        0.04;
     }
 
     if (wireRef.current) {
-      wireRef.current.rotation.y =
-        -time * 0.15;
+      const targetY =
+        -time * 0.12 + mouseX * 0.25;
 
-      wireRef.current.rotation.z =
-        time * 0.08;
-
-      wireRef.current.rotation.x +=
-        pointer.y * 0.04;
+      const targetX = mouseY * 0.12;
 
       wireRef.current.rotation.y +=
-        pointer.x * 0.04;
+        (targetY -
+          wireRef.current.rotation.y) *
+        0.04;
+
+      wireRef.current.rotation.x +=
+        (targetX -
+          wireRef.current.rotation.x) *
+        0.04;
+
+      wireRef.current.rotation.z =
+        Math.sin(time * 0.25) * 0.12;
     }
 
     if (innerRef.current) {
       innerRef.current.rotation.x =
-        time * 0.5;
+        time * 0.45;
 
       innerRef.current.rotation.y =
-        time * 0.7;
+        time * 0.65;
+
+      const targetScale =
+        1 + Math.abs(mouseX) * 0.08;
+
+      innerRef.current.scale.x +=
+        (targetScale -
+          innerRef.current.scale.x) *
+        0.05;
+
+      innerRef.current.scale.y +=
+        (targetScale -
+          innerRef.current.scale.y) *
+        0.05;
+
+      innerRef.current.scale.z +=
+        (targetScale -
+          innerRef.current.scale.z) *
+        0.05;
     }
   });
 
   return (
     <Float
       speed={1.5}
-      rotationIntensity={0.25}
-      floatIntensity={0.5}
+      rotationIntensity={0.2}
+      floatIntensity={0.55}
     >
       <mesh ref={crystalRef}>
         <icosahedronGeometry args={[1.8, 1]} />
@@ -84,7 +112,7 @@ function Crystal() {
           color="#D4AF37"
           wireframe
           transparent
-          opacity={0.65}
+          opacity={0.7}
         />
       </mesh>
 
@@ -95,29 +123,27 @@ function Crystal() {
 
         <meshStandardMaterial
           color="#D4AF37"
-          metalness={0.9}
-          roughness={0.2}
-          emissive="#3a2a08"
-          emissiveIntensity={0.4}
+          metalness={0.95}
+          roughness={0.15}
+          emissive="#5a4108"
+          emissiveIntensity={0.65}
         />
       </mesh>
     </Float>
   );
 }
 
-
-/* =========================================
-   PARTICLES
-========================================= */
-
 function Particles() {
   const particlesRef = useRef(null);
 
   const particleCount = 250;
-
   const positions = [];
 
-  for (let i = 0; i < particleCount; i++) {
+  for (
+    let i = 0;
+    i < particleCount;
+    i++
+  ) {
     const angle = i * 2.399963;
 
     const radius =
@@ -154,7 +180,9 @@ function Particles() {
         <bufferAttribute
           attach="attributes-position"
           count={particleCount}
-          array={new Float32Array(positions)}
+          array={
+            new Float32Array(positions)
+          }
           itemSize={3}
         />
       </bufferGeometry>
@@ -170,11 +198,6 @@ function Particles() {
   );
 }
 
-
-/* =========================================
-   HERO
-========================================= */
-
 function Hero() {
   const scrollToSection = (id) => {
     const section =
@@ -189,44 +212,41 @@ function Hero() {
 
   return (
     <section
-      id="hero"
+      id="home"
       className="hero"
     >
-
-      {/* HERO CONTENT */}
+      {/* HERO TEXT */}
 
       <motion.div
         className="hero-text"
-
         initial={{
           opacity: 0,
           y: 40,
         }}
-
         animate={{
           opacity: 1,
           y: 0,
         }}
-
         transition={{
           duration: 1,
-          ease: [0.22, 1, 0.36, 1],
+          ease: [
+            0.22,
+            1,
+            0.36,
+            1,
+          ],
         }}
       >
-
         <motion.p
           className="hero-label"
-
           initial={{
             opacity: 0,
             y: 20,
           }}
-
           animate={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
             duration: 0.8,
             delay: 0.2,
@@ -235,134 +255,132 @@ function Hero() {
           AUTOKRYX TECHNOLOGIES
         </motion.p>
 
-
         <motion.h1
           initial={{
             opacity: 0,
             y: 35,
           }}
-
           animate={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
             duration: 1,
             delay: 0.25,
-            ease: [0.22, 1, 0.36, 1],
+            ease: [
+              0.22,
+              1,
+              0.36,
+              1,
+            ],
           }}
         >
           Technology built
           <br />
-          for{" "}
-          <span>
-            one billion.
-          </span>
+          for <span>one billion.</span>
         </motion.h1>
-
 
         <motion.p
           className="hero-subtitle"
-
           initial={{
             opacity: 0,
             y: 25,
           }}
-
           animate={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
             duration: 0.8,
             delay: 0.5,
           }}
         >
-          Infrastructure · Identity · Intelligence
+          Infrastructure · Identity ·
+          Intelligence
         </motion.p>
-
 
         <motion.div
           className="hero-buttons"
-
           initial={{
             opacity: 0,
             y: 25,
           }}
-
           animate={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
             duration: 0.8,
             delay: 0.7,
           }}
         >
-
-          <button
+          <motion.button
             type="button"
             onClick={() =>
               scrollToSection("products")
             }
+            whileHover={{
+              y: -3,
+            }}
+            whileTap={{
+              scale: 0.97,
+            }}
           >
             Explore Products
             <span>↗</span>
-          </button>
+          </motion.button>
 
-
-          <button
+          <motion.button
             type="button"
             className="secondary-button"
             onClick={() =>
               scrollToSection("corporate")
             }
+            whileHover={{
+              y: -3,
+            }}
+            whileTap={{
+              scale: 0.97,
+            }}
           >
             Corporate Profile
             <span>↗</span>
-          </button>
-
+          </motion.button>
         </motion.div>
-
       </motion.div>
 
-
-      {/* 3D SCENE */}
+      {/* 3D HERO */}
 
       <motion.div
         className="hero-3d"
-
         initial={{
           opacity: 0,
-          scale: 0.85,
+          scale: 0.8,
         }}
-
         animate={{
           opacity: 1,
           scale: 1,
         }}
-
         transition={{
           duration: 1.4,
           delay: 0.2,
-          ease: [0.22, 1, 0.36, 1],
+          ease: [
+            0.22,
+            1,
+            0.36,
+            1,
+          ],
         }}
       >
-
         <Canvas
           camera={{
             position: [0, 0, 7],
             fov: 45,
           }}
-
           dpr={[1, 2]}
         >
-
           <ambientLight
-            intensity={1.2}
+            intensity={1.1}
           />
 
           <directionalLight
@@ -371,9 +389,16 @@ function Hero() {
             color="#D4AF37"
           />
 
+          <directionalLight
+            position={[-4, 1, 3]}
+            intensity={2}
+            color="#ffffff"
+          />
+
           <pointLight
             position={[-4, -2, 4]}
-            intensity={2}
+            intensity={2.5}
+            color="#D4AF37"
           />
 
           <Crystal />
@@ -385,11 +410,8 @@ function Hero() {
             enablePan={false}
             enableRotate={false}
           />
-
         </Canvas>
-
       </motion.div>
-
     </section>
   );
 }
