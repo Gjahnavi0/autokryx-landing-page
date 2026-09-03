@@ -6,7 +6,6 @@ import { useRef } from "react";
 function Crystal() {
   const crystalRef = useRef(null);
   const wireRef = useRef(null);
-  const innerRef = useRef(null);
   const { pointer } = useThree();
 
   useFrame((state) => {
@@ -53,32 +52,6 @@ function Crystal() {
       wireRef.current.rotation.z =
         Math.sin(time * 0.25) * 0.12;
     }
-
-    if (innerRef.current) {
-      innerRef.current.rotation.x =
-        time * 0.45;
-
-      innerRef.current.rotation.y =
-        time * 0.65;
-
-      const targetScale =
-        1 + Math.abs(mouseX) * 0.08;
-
-      innerRef.current.scale.x +=
-        (targetScale -
-          innerRef.current.scale.x) *
-        0.05;
-
-      innerRef.current.scale.y +=
-        (targetScale -
-          innerRef.current.scale.y) *
-        0.05;
-
-      innerRef.current.scale.z +=
-        (targetScale -
-          innerRef.current.scale.z) *
-        0.05;
-    }
   });
 
   return (
@@ -87,6 +60,7 @@ function Crystal() {
       rotationIntensity={0.2}
       floatIntensity={0.55}
     >
+      {/* Main Crystal */}
       <mesh ref={crystalRef}>
         <icosahedronGeometry args={[1.8, 1]} />
 
@@ -102,6 +76,7 @@ function Crystal() {
         />
       </mesh>
 
+      {/* Gold Wireframe */}
       <mesh
         ref={wireRef}
         scale={1.03}
@@ -113,20 +88,6 @@ function Crystal() {
           wireframe
           transparent
           opacity={0.7}
-        />
-      </mesh>
-
-      <mesh ref={innerRef}>
-        <octahedronGeometry
-          args={[0.65, 0]}
-        />
-
-        <meshStandardMaterial
-          color="#D4AF37"
-          metalness={0.95}
-          roughness={0.15}
-          emissive="#5a4108"
-          emissiveIntensity={0.65}
         />
       </mesh>
     </Float>
@@ -158,7 +119,11 @@ function Particles() {
     const z =
       Math.cos(i * 0.91) * 2;
 
-    positions.push(x, y, z);
+    positions.push(
+      x,
+      y,
+      z
+    );
   }
 
   useFrame((state) => {
@@ -215,8 +180,7 @@ function Hero() {
       id="home"
       className="hero"
     >
-      {/* HERO TEXT */}
-
+      {/* Hero Text */}
       <motion.div
         className="hero-text"
         initial={{
@@ -349,8 +313,7 @@ function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* 3D HERO */}
-
+      {/* 3D Hero */}
       <motion.div
         className="hero-3d"
         initial={{
